@@ -1,9 +1,6 @@
-package fr.lhuet.breizhcamp;
+package fr.lhuet.devoxx;
 
 import com.pi4j.io.gpio.*;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
-import com.pi4j.wiringpi.*;
 import io.vertx.core.AbstractVerticle;
 
 /**

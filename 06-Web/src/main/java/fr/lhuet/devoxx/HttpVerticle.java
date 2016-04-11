@@ -1,4 +1,4 @@
-package fr.lhuet.breizhcamp;
+package fr.lhuet.devoxx;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Router;

@@ -5,7 +5,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
-group 'fr.lhuet.breizhcamp'
+group 'fr.lhuet.devoxx'
 version '1.0.0'
 
 mainClassName = 'io.vertx.core.Launcher'
@@ -29,7 +29,7 @@ dependencies {
 
 shadowJar {
     manifest {
-        attributes 'Main-Verticle': 'fr.lhuet.breizhcamp.MainApp'
+        attributes 'Main-Verticle': 'fr.lhuet.devoxx.MainApp'
     }
     mergeServiceFiles {
         include 'META-INF/services/io.vertx.core.spi.VerticleFactory'

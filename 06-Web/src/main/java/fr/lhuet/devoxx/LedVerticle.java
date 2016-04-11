@@ -1,4 +1,4 @@
-package fr.lhuet.breizhcamp;
+package fr.lhuet.devoxx;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;

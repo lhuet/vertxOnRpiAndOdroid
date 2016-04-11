@@ -1,4 +1,4 @@
-package fr.lhuet.breizhcamp;
+package fr.lhuet.devoxx;
 
 import com.pi4j.wiringpi.Gpio;
 import io.vertx.core.AbstractVerticle;
@@ -14,7 +14,9 @@ public class MainApp extends AbstractVerticle {
 
         initHardware();
 
-        vertx.deployVerticle(LCDverticle.class.getName());
+        vertx.deployVerticle(Ds18b20Verticle.class.getName());
+        vertx.deployVerticle(LedVerticle.class.getName());
+        vertx.deployVerticle(HttpVerticle.class.getName());
 
     }
 

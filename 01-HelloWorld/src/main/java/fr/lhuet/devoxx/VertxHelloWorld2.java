@@ -1,8 +1,6 @@
-package fr.lhuet.breizhcamp;
+package fr.lhuet.devoxx;
 
 import com.pi4j.io.gpio.*;
-import com.pi4j.wiringpi.Gpio;
-import com.pi4j.wiringpi.GpioUtil;
 import io.vertx.core.Vertx;
 
 /**

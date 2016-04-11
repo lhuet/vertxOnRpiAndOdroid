@@ -1,4 +1,4 @@
-package fr.lhuet.breizhcamp;
+package fr.lhuet.devoxx;
 
 import io.vertx.core.*;
 import io.vertx.core.buffer.Buffer;
@@ -34,7 +34,7 @@ public class Ds18b20Verticle extends AbstractVerticle {
                     event.reply(this.tempSensor2);
                     break;
                 default:
-                    event.reply(0);
+                    event.reply(null);
             }
         });
 
@@ -44,8 +44,12 @@ public class Ds18b20Verticle extends AbstractVerticle {
             fut.complete();
         });
         // .. and continue refreshing the 2 temp. sensors every minute
-        vertx.setPeriodic(60000, event -> {
-            readTemp(event1 -> logger.debug("Temp sensor reading finished"));
+        vertx.setPeriodic(5000, event -> {
+            readTemp(event1 -> {
+                vertx.eventBus().publish("sensor-temp-1", this.tempSensor1);
+                vertx.eventBus().publish("sensor-temp-2", this.tempSensor2);
+                logger.debug("Temp sensor reading finished");
+            });
         });
 
     }
