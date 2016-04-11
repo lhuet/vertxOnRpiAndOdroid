@@ -1,63 +1,64 @@
 package fr.lhuet.devoxx;
 
+import com.pi4j.io.gpio.*;
+import com.pi4j.platform.Platform;
+import com.pi4j.platform.PlatformAlreadyAssignedException;
+import com.pi4j.platform.PlatformManager;
 import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.GpioUtil;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 
 /**
  * Created by lhuet on 14/03/16.
  */
 public class VertxVerticleHelloWorld extends AbstractVerticle {
 
-    public static void main(String[] args) {
+    private static Logger log = LoggerFactory.getLogger(VertxVerticleHelloWorld.class);
 
+    private GpioPinDigitalOutput led;
+
+    public static void main(String[] args) {
         // Verticle deployment
         Vertx.vertx().deployVerticle(VertxVerticleHelloWorld.class.getName());
     }
 
+
     @Override
     public void start() throws Exception {
 
-        System.out.println("Starting Vertx Verticle ...");
+        log.info("Starting Vertx Verticle ...");
 
         initGPIO();
 
         vertx.setPeriodic(1000, l -> {
             // Blink led every seconds
-            if (Gpio.digitalRead(1) != Gpio.LOW) {
-                System.out.println("Switch off ...");
-                Gpio.digitalWrite(1, Gpio.LOW);
-            }
-            else {
-                System.out.println("Switch on ...");
-                Gpio.digitalWrite(1, Gpio.HIGH);
-            }
-        });
+            led.toggle();
+            log.info("Led status : " + led.getState());
 
+        });
     }
 
     @Override
     public void stop() throws Exception {
-        System.out.println("Stopping Vertx Verticle ...");
-
-        System.out.println("Switch off ...");
-        Gpio.digitalWrite(1, Gpio.LOW);
-
+        log.info("Stopping Vertx Verticle ...");
+        GpioController gpio = GpioFactory.getInstance();
+        gpio.shutdown();
     }
 
-    private void initGPIO() {
-        // PI4J Init
-        if (Gpio.wiringPiSetup() == -1) {
-            System.out.println(" ==>> GPIO SETUP FAILED");
-            return;
-        }
+    private void initGPIO() throws PlatformAlreadyAssignedException {
+        // Default platform is Raspberry -> Explicit assign the target platform
+        PlatformManager.setPlatform(Platform.ODROID);
 
-        // GPIO 1 init as Output
-        GpioUtil.export(1, GpioUtil.DIRECTION_OUT);
-        Gpio.pinMode (1, Gpio.OUTPUT) ;
-        // Force low state for GPIO 1
-        Gpio.digitalWrite(1, Gpio.LOW);
+        // Configure GPIO 01 as Output
+        GpioController gpio = GpioFactory.getInstance();
+        led = gpio.provisionDigitalOutputPin(OdroidC1Pin.GPIO_01, PinState.LOW);
+
+        // Force GPIO to LOW on shutdown
+        led.setShutdownOptions(true, PinState.LOW);
+
     }
 
 }
