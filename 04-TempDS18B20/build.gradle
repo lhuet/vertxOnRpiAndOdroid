@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     compile ('io.vertx:vertx-core:'+vertxVersion)
-    compile files('../libs/pi4j-core.jar')
+    compile files('../libs/pi4j-core.jar', '../libs/pi4j-device.jar')
 }
 
 shadowJar {
