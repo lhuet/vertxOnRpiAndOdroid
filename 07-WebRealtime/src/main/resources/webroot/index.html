@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>07-WebRealtime</title>
+    <link href="vendors/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body ng-app="demo-breizhcamp">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Vert.x au BreizhCamp</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" ng-controller="MainCtrl">
+
+        <div class="row">
+            <h1 class="col-md-3">Sensor 1 temp :</h1><h1 class="col-md-3">{{temp1}} °C</h1>
+        </div>
+        <div class="row">
+            <h1 class="col-md-3">Sensor 2 temp :</h1><h1 class="col-md-3">{{temp2}} °C</h1>
+        </div>
+
+    </div>
+
+    <script src="vendors/sockjs-1.0.3.min.js"></script>
+    <script src="vendors/angular.min.js"></script>
+    <script src="vendors/vertx-eventbus.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

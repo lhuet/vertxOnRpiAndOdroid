@@ -1,0 +1,10 @@
+rootProject.name = 'VertxIoT'
+
+include '01-HelloWorld'
+include '02-HelloWorldVerticle'
+include '03-EventBus'
+include '04-TempDS18B20'
+include '05-LcdI2C'
+include '06-Web'
+include '07-WebRealtime'
+

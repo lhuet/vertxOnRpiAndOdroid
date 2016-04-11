@@ -1,0 +1,37 @@
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+group 'fr.lhuet.breizhcamp'
+version '1.0.0'
+
+mainClassName = 'io.vertx.core.Launcher'
+sourceCompatibility = '1.8'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile ('io.vertx:vertx-core:'+vertxVersion) {
+        exclude group: 'io.netty', module: 'netty-codec-http'
+        exclude group: 'io.netty', module: 'netty-codec'
+        exclude group: 'io.netty', module: 'netty-buffer'
+        exclude group: 'io.netty', module: 'netty-handler'
+        exclude group: 'com.fasterxml.jackson.core'
+    }
+    compile files('../libs/pi4j-core.jar')
+}
+
+shadowJar {
+    manifest {
+        attributes 'Main-Verticle': 'fr.lhuet.breizhcamp.VertxVerticleHelloWorld'
+    }
+    mergeServiceFiles {
+        include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+    }
+}
