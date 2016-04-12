@@ -10,7 +10,7 @@ import io.vertx.core.logging.LoggerFactory;
  */
 public class ButtonVerticle extends AbstractVerticle {
 
-    private Logger log = LoggerFactory.getLogger(ButtonVerticle.class);
+    private static Logger log = LoggerFactory.getLogger(ButtonVerticle.class);
 
     private GpioController gpio;
     private GpioPinDigitalInput myButton;

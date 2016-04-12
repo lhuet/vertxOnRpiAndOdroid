@@ -11,7 +11,7 @@ import io.vertx.core.logging.LoggerFactory;
  */
 public class LedVerticle extends AbstractVerticle {
 
-    private Logger log = LoggerFactory.getLogger(LedVerticle.class);
+    private static Logger log = LoggerFactory.getLogger(LedVerticle.class);
 
     private GpioController gpio;
     private GpioPinDigitalOutput myLed;

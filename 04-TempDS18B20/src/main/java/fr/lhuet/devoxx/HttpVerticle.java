@@ -9,7 +9,7 @@ import io.vertx.core.logging.LoggerFactory;
  */
 public class HttpVerticle extends AbstractVerticle {
 
-    private Logger log = LoggerFactory.getLogger(HttpVerticle.class);
+    private static Logger log = LoggerFactory.getLogger(HttpVerticle.class);
 
     @Override
     public void start() throws Exception {
