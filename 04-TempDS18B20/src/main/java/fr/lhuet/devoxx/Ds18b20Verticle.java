@@ -20,21 +20,19 @@ public class Ds18b20Verticle extends AbstractVerticle {
 
     private static Logger log = LoggerFactory.getLogger(Ds18b20Verticle.class);
 
-    private Map<Integer, Double> sensors;
+    private Map<Integer, Double> sensors = new HashMap();
     private TemperatureSensor sensor1;
     private TemperatureSensor sensor2;
-    private W1Master w1Master;
 
     @Override
     public void start(Future<Void> fut) throws Exception {
 
         // Sensors
-        sensors = new HashMap();
         sensors.put(1, null);
         sensors.put(2, null);
 
         // W1 Bus init
-        w1Master = new W1Master();
+        W1Master w1Master = new W1Master();
 
         // Get DS18B20 Temp device objects
         for (TemperatureSensor device : w1Master.getDevices(TemperatureSensor.class)) {
@@ -65,9 +63,7 @@ public class Ds18b20Verticle extends AbstractVerticle {
             else {
                 event.fail(-1, "Bad sensor Id");
             }
-
         });
-
 
     }
 
@@ -92,11 +88,10 @@ public class Ds18b20Verticle extends AbstractVerticle {
             sensor2Fut.complete();
         });
 
-
+        // Resolve readTemp Future only when values from the 2 sensors are obtained
         CompositeFuture.all(sensor1Fut, sensor2Fut).setHandler(event -> {
             resultHandler.handle(Future.succeededFuture());
         });
-
     }
 
 }
