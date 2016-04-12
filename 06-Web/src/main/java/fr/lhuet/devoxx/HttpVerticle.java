@@ -1,6 +1,8 @@
 package fr.lhuet.devoxx;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 
@@ -9,6 +11,7 @@ import io.vertx.ext.web.RoutingContext;
  */
 public class HttpVerticle extends AbstractVerticle {
 
+    private static Logger log = LoggerFactory.getLogger(HttpVerticle.class);
 
     @Override
     public void start() throws Exception {
@@ -21,7 +24,7 @@ public class HttpVerticle extends AbstractVerticle {
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8000, event -> {
-                    System.out.println("HTTP Server started on port 8000");
+                    log.info("HTTP Server started on port 8000");
                 });
 
     }
@@ -31,19 +34,18 @@ public class HttpVerticle extends AbstractVerticle {
         String sensorId = ctx.request().getParam("sensorId");
 
         vertx.eventBus().send("sensor-temp", sensorId, ar -> {
-           if (ar.succeeded()) {
-               ctx.response().end(ar.result().body().toString());
-           } else {
-               ctx.response().setStatusCode(500).end("Event bus temp error : " + ar.cause().getMessage());
-           }
+            if (ar.succeeded()) {
+                ctx.response().end(ar.result().body().toString());
+            } else {
+                ctx.response().setStatusCode(500).end("Event bus temp error : " + ar.cause().getMessage());
+            }
         });
 
     }
 
     private void handlerPutLed(RoutingContext ctx) {
 
-        vertx.eventBus().send("toggle-led", "" , ar -> {
-            System.out.println("test toggle led");
+        vertx.eventBus().send("toggle-led", "", ar -> {
             if (ar.succeeded()) {
                 ctx.response().end(ar.result().body().toString());
             } else {
