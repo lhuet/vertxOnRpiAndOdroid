@@ -1,5 +1,8 @@
 package fr.lhuet.devoxx;
 
+import com.pi4j.component.lcd.LCD;
+import com.pi4j.component.lcd.LCDTextAlignment;
+import com.pi4j.component.lcd.impl.I2CLcdDisplay;
 import io.vertx.core.AbstractVerticle;
 
 /**
@@ -10,40 +13,12 @@ public class LCDverticle extends AbstractVerticle {
     @Override
     public void start() throws Exception {
 
-        try
-        {
-            I2CLcdDisplay lcd = new I2CLcdDisplay( 1, 0x27, 4, 20);
+        I2CLcdDisplay lcd = new I2CLcdDisplay(4, 20, 1, 0x27, 3, 0, 1, 2, 7, 6, 5, 4);
 
-            lcd.sendText( 0, "prvni radka" );
-            lcd.setBacklight( true );
-//            lcd.sendText( 1, "1234567890123456" );
-//            for( int i = 0; i<2; i++ )
-//            {
-//                Thread.sleep(500);
-//                lcd.setBacklight( false );
-//                Thread.sleep(500);
-//                lcd.setBacklight( true );
-//            }
-//
-//            for( int i = 0; i < 16; i++ )
-//            {
-//                String str = "";
-//                for( int j = 0; j<16; j++ )
-//                {
-//                    str = str + (char)((i*16)+j);
-//                }
-//                lcd.sendText(0, ""+i + ": " + (i*16) + "-" + ((i*16)+15) );
-//                lcd.sendText(1,  str );
-//                Thread.sleep(500);
-//            }
+        lcd.writeln(1, "Demo Devoxx France", LCDTextAlignment.ALIGN_CENTER);
 
-            lcd.sendText( 1, "Raspberry Pi" );
-            lcd.sendText( 2, "!!!!!!!!!!!!" );
-        }
-        catch( Exception ee )
-        {
-            ee.printStackTrace();
-        }
-
+        vertx.setPeriodic(1000, l-> {
+            lcd.setBacklight(lcd.isBacklight());
+        });
     }
 }
