@@ -1,4 +1,4 @@
-angular.module('demo-breizhcamp', [])
+angular.module('demo-devoxx', [])
     .controller('MainCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
 
         $scope.eb = null;
@@ -27,23 +27,14 @@ angular.module('demo-breizhcamp', [])
 
             $scope.eb.onopen = function() {
 
-                $scope.eb.registerHandler("sensor-temp-1", function (err, msg) {
+                $scope.eb.registerHandler("sensors-temp-publish", function (err, msg) {
                     if (err) {
                         console.error('Failed to retrieve temp 1 : ' + err);
                         return;
                     }
-                    console.log("temp 1 : " + msg.body );
-                    $scope.temp1 = msg.body;
-                    $scope.$apply();
-                });
-
-                $scope.eb.registerHandler("sensor-temp-2", function (err, msg) {
-                    if (err) {
-                        console.error('Failed to retrieve temp 2 : ' + err);
-                        return;
-                    }
-                    console.log("temp 2 : " + msg.body );
-                    $scope.temp2 = msg.body;
+                    console.log("temps : " + msg.body );
+                    $scope.temp1 = msg.body.sensor1;
+                    $scope.temp2 = msg.body.sensor2;
                     $scope.$apply();
                 });
 

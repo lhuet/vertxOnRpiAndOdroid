@@ -1,6 +1,8 @@
 package fr.lhuet.devoxx;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
@@ -13,6 +15,7 @@ import io.vertx.ext.web.handler.sockjs.SockJSHandler;
  */
 public class HttpVerticle extends AbstractVerticle {
 
+    private static Logger log = LoggerFactory.getLogger(HttpVerticle.class);
 
     @Override
     public void start() throws Exception {
@@ -35,7 +38,7 @@ public class HttpVerticle extends AbstractVerticle {
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8000, event -> {
-                    System.out.println("HTTP Server started on port 8000");
+                    log.info("HTTP Server started on port 8000");
                 });
 
     }
