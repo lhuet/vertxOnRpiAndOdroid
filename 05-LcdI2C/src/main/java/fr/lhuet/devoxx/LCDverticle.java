@@ -24,7 +24,7 @@ public class LCDverticle extends AbstractVerticle {
             Double sensor2 = message.getDouble("sensor2");
 
             lcd.writeln(2, "  Sensor 1 : " + sensor1 + "C", LCDTextAlignment.ALIGN_LEFT);
-            lcd.writeln(2, "  Sensor 2 : " + sensor1 + "C", LCDTextAlignment.ALIGN_LEFT);
+            lcd.writeln(3, "  Sensor 2 : " + sensor1 + "C", LCDTextAlignment.ALIGN_LEFT);
         });
 
     }
