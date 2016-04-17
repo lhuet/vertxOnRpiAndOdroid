@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     compile ('io.vertx:vertx-core:'+vertxVersion)
+    compile ('io.vertx:vertx-hazelcast:'+vertxVersion)
     compile files('../libs/pi4j-core.jar', '../libs/pi4j-device.jar')
 }
 
