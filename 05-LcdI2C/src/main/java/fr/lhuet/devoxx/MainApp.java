@@ -18,8 +18,15 @@ public class MainApp extends AbstractVerticle {
         // Default platform is Raspberry -> Explicit assign the target platform
         PlatformManager.setPlatform(Platform.ODROID);
 
-        vertx.deployVerticle(LCDverticle.class.getName());
-        vertx.deployVerticle(Ds18b20Verticle.class.getName());
+        // Get config parameter from main verticle and déploy LCD verticle with the same config parameters
+        DeploymentOptions options = new DeploymentOptions().setConfig(config());
+        vertx.deployVerticle(LCDverticle.class.getName(), options);
+
+        // Deploy only if 1-wire is present
+        boolean is1wire = config().getBoolean("1-wire");
+        if (is1wire) {
+            vertx.deployVerticle(Ds18b20Verticle.class.getName());
+        }
 
     }
 
