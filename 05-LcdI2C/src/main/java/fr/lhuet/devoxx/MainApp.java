@@ -15,9 +15,6 @@ public class MainApp extends AbstractVerticle {
     @Override
     public void start() throws Exception {
 
-        // Default platform is Raspberry -> Explicit assign the target platform
-        PlatformManager.setPlatform(Platform.ODROID);
-
         // Get config parameter from main verticle and déploy LCD verticle with the same config parameters
         DeploymentOptions options = new DeploymentOptions().setConfig(config());
         vertx.deployVerticle(LCDverticle.class.getName(), options);
