@@ -1,0 +1,18 @@
+URLs de démo
+
+Démo 4 (DS18B20 + HTTP)
+-----------------------
+curl http://10.42.0.241:8000/?id=1 & echo
+curl http://10.42.0.241:8000/?id=2 & echo
+
+Démo 6 (routeur HTTP)
+---------------------
+curl http://10.42.0.241:8000/temp/1 & echo
+curl http://10.42.0.241:8000/temp/2 & echo 
+curl -X PUT http://10.42.0.241:8000/led
+
+Démo 7 (Websocket)
+------------------
+http://10.42.0.241:8000/
+
+

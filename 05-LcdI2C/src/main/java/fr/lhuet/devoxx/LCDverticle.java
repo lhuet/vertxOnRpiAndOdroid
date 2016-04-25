@@ -11,6 +11,8 @@ import io.vertx.core.json.JsonObject;
  */
 public class LCDverticle extends AbstractVerticle {
 
+    private I2CLcdDisplay lcd;
+
     @Override
     public void start() throws Exception {
 
@@ -18,9 +20,9 @@ public class LCDverticle extends AbstractVerticle {
         int lcdAddress = config().getInteger("lcd.address", 0x27);
 
         // LCD Display with I2C PCF8574 chip
-        I2CLcdDisplay lcd = new I2CLcdDisplay(4, 20, 1, lcdAddress, 3, 0, 1, 2, 7, 6, 5, 4);
+        lcd = new I2CLcdDisplay(4, 20, 1, lcdAddress, 3, 0, 1, 2, 7, 6, 5, 4);
 
-        // switch off the light
+        // switch on the light
         lcd.setBacklight(false);
 
         lcd.writeln(0, "Vert.x - Devoxx France", LCDTextAlignment.ALIGN_CENTER);
@@ -33,10 +35,15 @@ public class LCDverticle extends AbstractVerticle {
 
             lcd.writeln(2, "  Sensor 1 : " + sensor1 + "C", LCDTextAlignment.ALIGN_LEFT);
             lcd.writeln(3, "  Sensor 2 : " + sensor2 + "C", LCDTextAlignment.ALIGN_LEFT);
-            // Switch on the light
-            lcd.setBacklight(true);
         });
 
     }
 
+    @Override
+    public void stop() throws Exception {
+        // Switch on the light
+        lcd.setBacklight(true);
+        // Clean de display bedore stopping the verticle
+        lcd.clear();
+    }
 }

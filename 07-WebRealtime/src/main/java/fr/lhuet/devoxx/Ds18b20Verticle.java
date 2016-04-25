@@ -49,7 +49,7 @@ public class Ds18b20Verticle extends AbstractVerticle {
                 log.info("Temp sensor reading ok : " + sensors.get(1) + " / " + sensors.get(2));
                 // Broadcast message
                 vertx.eventBus().publish("sensors-temp-publish", new JsonObject().put("sensor1", sensors.get(1))
-                                                             .put("sensor2", sensors.get(2)));
+                                                                                 .put("sensor2", sensors.get(2)));
             });
         });
 

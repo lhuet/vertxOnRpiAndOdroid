@@ -20,12 +20,14 @@ public class HttpVerticle extends AbstractVerticle {
     @Override
     public void start() throws Exception {
 
+        // Vert.x Web  router
         Router router = Router.router(vertx);
 
+        // Routes definition
         router.get().path("/temp/:sensorId").handler(this::handlerGetTemp);
         router.put().path("/led").handler(this::handlerPutLed);
 
-        // Allow outbound traffic to the vtoons addresses
+        // Setting Bridge permissions
         BridgeOptions options = new BridgeOptions()
                 .addInboundPermitted(new PermittedOptions().setAddress("sensor-temp"))
                 // all outbound messages are permitted
@@ -33,6 +35,7 @@ public class HttpVerticle extends AbstractVerticle {
 
         router.route("/eventbus/*").handler(SockJSHandler.create(vertx).bridge(options));
 
+        // Serve static Files from webroot dir
         router.route().handler(StaticHandler.create());
 
         vertx.createHttpServer()
