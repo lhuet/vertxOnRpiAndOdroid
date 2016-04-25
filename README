@@ -1,4 +1,9 @@
-URLs de démo
+Slides et code des démos de la présentation "Vert.x pour l'IoT dans l'embarqué"  du BreizhCamp 2016 / Devoxx France 2016
+
+Dépendance avec Pi4J 1.1.0-SNAPSHOT (support des cartes Odroid)
+
+
+URLs de démo :
 
 Démo 4 (DS18B20 + HTTP)
 -----------------------
